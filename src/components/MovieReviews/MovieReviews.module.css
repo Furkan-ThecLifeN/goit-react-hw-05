@@ -1,0 +1,24 @@
+.message {
+  font-style: italic;
+  color: #555;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.item {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.author {
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.content {
+  line-height: 1.5;
+}
