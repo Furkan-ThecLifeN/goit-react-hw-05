@@ -1,31 +1,37 @@
 import axios from 'axios';
 
-const API_KEY = '9ebf9e837d9ef4fed6be03cdee0216b5'; 
 const BASE_URL = 'https://api.themoviedb.org/3';
 
-const axiosInstance = axios.create({
-  baseURL: BASE_URL,
+// DÜZELTİLDİ: Bearer ile birlikte kullanılıyor
+const TOKEN = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZWJmOWU4MzdkOWVmNGZlZDZiZTAzY2RlZTAyMTZiNSIsIm5iZiI6MTc0MjkxNzcyNC4zOTYsInN1YiI6IjY3ZTJkMDVjZDcwYzYxNTkwMzc1ZTgzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.mGfFevHBMVfVG3Aha3atAbsBAX0sx3BUJdHGcEDZwAk';
+
+const options = {
   headers: {
-    Authorization: API_KEY,
-    'Content-Type': 'application/json',
+    Authorization: TOKEN,
   },
-});
+};
 
-export const fetchTrendingMovies = () =>
-  axiosInstance.get('/trending/movie/day').then(res => res.data.results);
+export const fetchTrending = async () => {
+  const { data } = await axios.get(`${BASE_URL}/trending/movie/day`, options);
+  return data.results;
+};
 
-export const fetchMoviesByQuery = query =>
-  axiosInstance
-    .get('/search/movie', { params: { query, include_adult: false, language: 'en-US', page: 1 } })
-    .then(res => res.data.results);
+export const searchMovies = async query => {
+  const { data } = await axios.get(`${BASE_URL}/search/movie?query=${query}`, options);
+  return data.results;
+};
 
-export const fetchMovieDetails = movieId =>
-  axiosInstance.get(`/movie/${movieId}`).then(res => res.data);
+export const fetchMovieDetails = async id => {
+  const { data } = await axios.get(`${BASE_URL}/movie/${id}`, options);
+  return data;
+};
 
-export const fetchMovieCast = movieId =>
-  axiosInstance.get(`/movie/${movieId}/credits`).then(res => res.data.cast);
+export const fetchMovieCast = async id => {
+  const { data } = await axios.get(`${BASE_URL}/movie/${id}/credits`, options);
+  return data.cast;
+};
 
-export const fetchMovieReviews = movieId =>
-  axiosInstance.get(`/movie/${movieId}/reviews`).then(res => res.data.results);
-
-export const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
+export const fetchMovieReviews = async id => {
+  const { data } = await axios.get(`${BASE_URL}/movie/${id}/reviews`, options);
+  return data.results;
+};
