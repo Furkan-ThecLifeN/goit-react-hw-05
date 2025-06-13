@@ -1,13 +1,11 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://api.themoviedb.org/3';
-
-// DÜZELTİLDİ: Bearer ile birlikte kullanılıyor
-const TOKEN = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZWJmOWU4MzdkOWVmNGZlZDZiZTAzY2RlZTAyMTZiNSIsIm5iZiI6MTc0MjkxNzcyNC4zOTYsInN1YiI6IjY3ZTJkMDVjZDcwYzYxNTkwMzc1ZTgzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.mGfFevHBMVfVG3Aha3atAbsBAX0sx3BUJdHGcEDZwAk';
+const TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZWJmOWU4MzdkOWVmNGZlZDZiZTAzY2RlZTAyMTZiNSIsIm5iZiI6MTc0MjkxNzcyNC4zOTYsInN1YiI6IjY3ZTJkMDVjZDcwYzYxNTkwMzc1ZTgzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.mGfFevHBMVfVG3Aha3atAbsBAX0sx3BUJdHGcEDZwAk';
 
 const options = {
   headers: {
-    Authorization: TOKEN,
+    Authorization: `Bearer ${TOKEN}`,
   },
 };
 
@@ -17,7 +15,8 @@ export const fetchTrending = async () => {
 };
 
 export const searchMovies = async query => {
-  const { data } = await axios.get(`${BASE_URL}/search/movie?query=${query}`, options);
+  const encodedQuery = encodeURIComponent(query);
+  const { data } = await axios.get(`${BASE_URL}/search/movie?query=${encodedQuery}`, options);
   return data.results;
 };
 
